@@ -1,6 +1,6 @@
 const Twit = require('twit')
+// make your own ENV
 const env = require('./ENV')
-
 const Twitter = new Twit(env)
 
 function Tweet() {
