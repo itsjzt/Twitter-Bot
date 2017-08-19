@@ -1,14 +1,7 @@
-const Twit = require('twit');
-// should be in Enviornment variable
-const env = {
-  consumer_key: process.env.consumer_key,
-  consumer_secret: process.env.consumer_secret,
-  access_token: process.env.access_token,
-  access_token_secret: process.env.access_token_secret,
-};
+const Twit = require('twit')
+const env = require('./ENV')
 
-
-const Twitter = new Twit(env);
+const Twitter = new Twit(env)
 
 function Tweet() {
   const day = new Date().getDay()
@@ -17,7 +10,7 @@ function Tweet() {
   Twitter.post(
     'statuses/update',
     { status: `Enjoy your ${_day[day]} ` },
-    (err, data, response) => { console.log(`Tweeted ${_day[day]}`); });
+    (err, data, response) => { console.log(`Tweeted ${_day[day]}`); })
 }
 
 
@@ -53,22 +46,8 @@ setInterval(Tweet, 60*60*24*1000)
 
 // random integer between the specified values.
 function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+  min = Math.ceil(min)
+  max = Math.floor(max)
+  return Math.floor(Math.random() * (max - min)) + min;
+  //The maximum is exclusive and the minimum is inclusive
 }
-
-
-// workaround for not crashing server and listen on a port
-const express = require('express');
-const app     = express();
-
-app.set('port', (process.env.PORT || 5000));
-
-//For avoidong Heroku $PORT error
-app.get('/', function(request, response) {
-    const result = 'App is running'
-    response.send(result);
-}).listen(app.get('port'), function() {
-    console.log('App is running, server is listening on port ', app.get('port'));
-});
